@@ -3260,6 +3260,48 @@
         </div>
     </div>
 
+    <!-- مودال Certificates (جدید) -->
+    <div class="modal-overlay" id="certificateModal">
+        <div class="modal-box">
+            <button class="modal-close" data-close>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2">
+                    <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
+            </button>
+            <div class="modal-body">
+                <span class="tag-pill">
+                    <span class="lang-fa">گواهینامه‌ها</span><span class="lang-en">Certificates</span>
+                </span>
+                <h3>
+                    <span class="lang-fa">گواهینامه‌های حرفه‌ای</span>
+                    <span class="lang-en">Professional Certificates</span>
+                </h3>
+
+                <div class="project-tabs">
+                    <button class="project-tab-btn active" data-tab="cert-tab1" onclick="switchCertTab('cert-tab1')">
+                        <span class="lang-fa">C# Programming</span>
+                        <span class="lang-en">C# Programming</span>
+                    </button>
+                </div>
+
+                <div class="project-tab-content active" id="cert-tab1">
+                    <div class="modal-media">
+                        <img src="projects/certificate.jpg" alt="C# Programming Certificate"
+                             onerror="this.style.display='none'">
+                    </div>
+                    <div class="tab-description">
+                        <h4 style="color:var(--accent2);margin-bottom:8px;">
+                            <span class="lang-fa">دوره C# Programming</span>
+                            <span class="lang-en">C# Programming Course</span>
+                        </h4>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="polyArazModal">
         <div class="modal-box">
             <button class="modal-close" data-close>
@@ -3741,6 +3783,26 @@
             document.querySelector(`#digikalaModal .project-tab-btn[data-tab="${tabId}"]`).classList.add('active');
         }
 
+        // --- Certificates functions (جدید) ---
+        function switchCertTab(tabId) {
+            document.querySelectorAll('#certificateModal .project-tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('#certificateModal .project-tab-btn').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`#certificateModal .project-tab-btn[data-tab="${tabId}"]`).classList.add('active');
+        }
+
+        function openCertificate() {
+            const modal = document.getElementById('certificateModal');
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            switchCertTab('cert-tab1');
+        }
+        // --- End Certificates functions ---
+
         function downloadCV(lang) {
             const urls = {
                 fa: 'CV/Farshad_Fazeli_CV_Persian.pdf',
@@ -3912,6 +3974,25 @@
             div.addEventListener('click', () => openEducation(i));
             educationGrid.appendChild(div);
         });
+
+        // --- کارت Certificates در بخش تحصیلات (جدید) ---
+        const certCard = document.createElement('div');
+        certCard.className = 'project-card reveal';
+        certCard.innerHTML = `
+                <div class="project-thumb" style="background:var(--grad);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                    <span style="color:#fff;font-size:3rem;position:relative;z-index:1;">${ic('education', 60)}</span>
+                </div>
+                <div class="project-info">
+                    <span class="tag-pill"><span class="lang-fa">گواهینامه</span><span class="lang-en">Certificate</span></span>
+                    <h4><span class="lang-fa">گواهینامه‌ها</span><span class="lang-en">Certificates</span></h4>
+                    <span style="display:block;margin-top:8px;line-height:1.6;">
+                        <span class="lang-fa">C# Programming</span>
+                        <span class="lang-en">C# Programming</span>
+                    </span>
+                </div>
+            `;
+        certCard.addEventListener('click', openCertificate);
+        educationGrid.appendChild(certCard);
 
         document.querySelectorAll('.modal-overlay').forEach(m => {
             m.addEventListener('click', e => {
